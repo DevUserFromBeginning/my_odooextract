@@ -27,23 +27,25 @@ def main():
     
     #['company_id', '=', 'Import Import'] # filtro de compañía...aparentemente no funciona
     ordersLines = models.execute_kw(db, uid, password,'product.product', 'search_read',
-                                 [[]],
-                                 {'fields':['id','default_code','code','name','display_name','description','partner_ref','active','product_tmpl_id',
-                                            'price','price_extra','lst_price','standard_price','pricelist_item_count','categ_id','__last_update',
-                                            'create_uid','create_date','is_product_variant','stock_quant_ids','stock_move_ids','qty_available',
+                                 [[['active','=',True],['categ_id','in',['Principal','Servicios y Software']],['type','!=','consu']]],
+                                 {'fields':['id','categ_id','code','name','product_tmpl_id',
+                                            'price','price_extra','lst_price','standard_price','pricelist_item_count','__last_update',
+                                            'create_uid','create_date','stock_quant_ids','stock_move_ids','qty_available',
                                             'virtual_available','free_qty','incoming_qty','outgoing_qty','orderpoint_ids','variant_bom_ids',
-                                            'bom_line_ids','bom_count','used_in_bom_count','mrp_product_qty','is_kits','date_from','date_to',
+                                            'bom_line_ids','bom_count','used_in_bom_count','mrp_product_qty',
                                             'sale_avg_price','purchase_avg_price','sale_num_invoiced','purchase_num_invoiced','sales_gap',
                                             'purchase_gap','turnover','total_cost','sale_expected','normal_cost','total_margin','expected_margin',
                                             'total_margin_rate','expected_margin_rate','purchased_product_qty','value_svl','quantity_svl',
-                                            'purchase_order_line_ids','sales_count','x_studio_nombre_producto_mix','detailed_type','type','currency_id',
-                                            'cost_currency_id','list_price','sale_ok','purchase_ok','pricelist_id','uom_id','seller_ids',
+                                            'purchase_order_line_ids','sales_count','x_studio_nombre_producto_mix','currency_id',
+                                            'cost_currency_id','list_price','sale_ok','purchase_ok','uom_id','seller_ids',
                                             'variant_seller_ids','product_variant_ids','product_variant_id','taxes_id','supplier_taxes_id','x_studio_upc']})
     
-    '''
+    linea = 0
     for orderLine in ordersLines:
+        print(f"item: {linea}: ")
         print(orderLine)
         print('\n')
+        linea +=1        
     '''
     campos = []
     for campo in ordersLines[0].keys():
@@ -71,7 +73,7 @@ def main():
     wb.save(r"C:\\Users\\ESCH\Desktop\\odoo\\excel\\productProduct.xlsx")        
     
     print(f"\n********************\nSe acab´lo que se daba")
-    
+    '''
     
 if __name__ == '__main__':
     main()

@@ -29,7 +29,7 @@ def main():
     
     #['company_id', '=', 'Import Import'] # filtro de compañía...aparentemente no funciona
     ordersLines = models.execute_kw(db, uid, password,'stock.picking', 'search_read',
-                                 [[['company_id','=','Import Import']]],
+                                 [[['company_id','=','Import Import'],['state','in',['waiting','confirmed','assigned']],['location_dest_id','=','Partner Locations/Customers']]],
                                  {'fields':['id','name','origin','note','backorder_id','backorder_ids','state','group_id','scheduled_date','date_deadline',
                                             'date','date_done','location_id','location_dest_id','move_lines','move_ids_without_package','picking_type_id',
                                             'picking_type_code','use_existing_lots','partner_id','company_id','move_line_ids','move_line_ids_without_package',
@@ -78,6 +78,7 @@ def main():
     wb.save(r"C:\\Users\\ESCH\Desktop\\odoo_api\\excel\\stockPicking.xlsx")        
     
     print(f"\n********************\nSe acab´lo que se daba")
+    
     
 if __name__ == '__main__':
     main()
