@@ -29,16 +29,14 @@ def main():
     #['company_id', '=', 'Import Import'] # filtro de compañía...aparentemente no funciona
     ordersLines = models.execute_kw(db, uid, password,'product.template', 'search_read',
                                  [[]],
-                                 {'fields':['id','company_id','default_code','name','display_name','categ_id','price','list_price','standard_price',
-                                            'x_studio_many2one_field_a487A','x_studio_sublinea_1','x_studio_upc','detailed_type','type','currency_id',
-                                            'cost_currency_id','uom_id','uom_name','uom_po_id','seller_ids','product_variant_ids',
-                                            'product_variant_id','product_variant_count','__last_update',
-                                            'create_uid','create_date','taxes_id','supplier_taxes_id',
-                                            'property_stock_production','property_stock_inventory','qty_available','virtual_available',
-                                            'incoming_qty','outgoing_qty','nbr_moves_in','nbr_moves_out','nbr_reordering_rules',
-                                            'reordering_min_qty','reordering_max_qty','route_from_categ_ids','bom_line_ids','bom_ids',
-                                            'bom_count','used_in_bom_count','mrp_product_qty','purchased_product_qty','cost_method','valuation',
-                                            'service_type','sales_count','invoice_policy','x_studio_many2one_field_2qA7w']})
+                                 {'fields':['id','default_code','name','categ_id','price','list_price','standard_price',
+                                            'x_studio_many2one_field_a487A','x_studio_sublinea_1','x_studio_upc','type','currency_id',
+                                            'cost_currency_id','uom_name','seller_ids','product_variant_ids','product_variant_id',
+                                            'product_variant_count','__last_update','taxes_id','supplier_taxes_id','property_stock_production',
+                                            'property_stock_inventory','qty_available','virtual_available','incoming_qty','outgoing_qty',
+                                            'nbr_moves_in','nbr_moves_out','nbr_reordering_rules','reordering_min_qty','reordering_max_qty',
+                                            'bom_line_ids','bom_ids','bom_count','used_in_bom_count','mrp_product_qty','purchased_product_qty',
+                                            'cost_method','valuation','sales_count','x_studio_many2one_field_2qA7w']})
     
     '''
     for orderLine in ordersLines:
@@ -68,10 +66,9 @@ def main():
         tmpColumn=1
         tmpRow = tmpRow + 1
     
-    wb.save(r"C:\\Users\\ESCH\Desktop\\odoo\\excel\\productTemplate.xlsx")        
+    wb.save(r"C:\\Users\\ESCH\Desktop\\odoo-852\\excel\\productTemplate.xlsx")        
     
     print(f"\n********************\nSe acab´lo que se daba")
-    
     
 if __name__ == '__main__':
     main()
