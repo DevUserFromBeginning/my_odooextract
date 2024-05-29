@@ -21,8 +21,8 @@ Fecha actual: 10/05/2024
 def main():
     url = 'https://importvzla-import-import-prueba-12847814.dev.odoo.com'
     db = 'importvzla-import-import-prueba-12847814'
-    username = 'admin'
-    password = 'Import2023!'
+    username = 'francisco.tellez@import-import.com'
+    password = '1129734'
 
     common = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(url))
     version = common.version()
@@ -41,7 +41,7 @@ def main():
     # ,['company_id','!=',False] filtro
     # (28052024) en producción tampoco tiene valor company_id; problema: qué artículos pertenecen y se mueven sólo en la financiera?
     ordersLines = models.execute_kw(db, uid, password,'product.product', 'search_read',
-                                 [[['active','=',True],['categ_id','in',['Principal','Servicios y Software']],['type','!=','consu']]],
+                                 [[['active','=',True],['categ_id','in',['Principal','Servicios y Software']],['type','!=','consu'],['name','=like','Hamburguesa de queso']]],
                                  {'fields':['id','categ_id','code','name','product_tmpl_id','price','price_extra','lst_price','standard_price',
                                             '__last_update','stock_quant_ids','stock_move_ids','qty_available','virtual_available','free_qty',
                                             'incoming_qty','outgoing_qty','orderpoint_ids','bom_line_ids','bom_count','used_in_bom_count',
@@ -51,7 +51,7 @@ def main():
                                             'quantity_svl','purchase_order_line_ids','sales_count','x_studio_nombre_producto_mix','currency_id',
                                             'cost_currency_id','list_price','uom_id','seller_ids','variant_seller_ids','product_variant_ids',
                                             'product_variant_id','taxes_id','supplier_taxes_id','x_studio_upc']})
-    '''
+    
     linea = 0
     for orderLine in ordersLines:
         print(f"item: {linea}: ")
@@ -85,7 +85,7 @@ def main():
     wb.save(r"C:\\Users\\ESCH\Desktop\\odoo-852\\excel\\productProduct.xlsx")        
     
     print(f"\n********************\nSe acab´lo que se daba")
-    
+    '''
     
 if __name__ == '__main__':
     main()

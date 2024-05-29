@@ -1,0 +1,17 @@
+db='importvzla-import-import-prueba-12250272'
+
+API
+clave: Import2023!
+nombre: Acceso External API
+clave: c0fb606dc437c6883f7d4dd76f4ae9730addee8e
+
+Pendientes:
+.- Modelos de datos (tengo unos cuantos)
+.- Campos de los modelos de datos (de los modelos en la lista)
+.- datos relacionados entre modelos
+
+.- crear consultas para cada modelo de datos con todos los campos disponibles y útiles
+.- validar la data en las tablas...modelos de datos
+
+.- utilizar filtros para diferenciar la data de la financiera
+.- corregir los registros que no tienen empresa para que toda la data de la financiera sea correcta y dejar por fuera la data de la fiscal con el filtrado por company_id

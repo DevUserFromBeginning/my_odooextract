@@ -12,12 +12,16 @@ Fecha actual: 10/05/2024
 .- Llevar los registros a excel
 
 '''
-
+'''url = 'https://importvzla-import-import-prueba-12847814.dev.odoo.com'
+    db = 'importvzla-import-import-prueba-12847814'
+    username = 'admin'
+    password = 'Import2023!'''
+    
 def main():
     url = 'https://importvzla-import-import-prueba-12847814.dev.odoo.com'
     db = 'importvzla-import-import-prueba-12847814'
-    username = 'admin'
-    password = 'Import2023!'
+    username = 'francisco.tellez@import-import.com'
+    password = '1129734'
 
     common = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(url))
     version = common.version()
@@ -28,17 +32,17 @@ def main():
     
     #['company_id', '=', 'Import Import'] # filtro de compañía...aparentemente no funciona
     ordersLines = models.execute_kw(db, uid, password,'product.template', 'search_read',
-                                 [[]],
+                                 [[['categ_id','in',['Principal','Servicios y Software']],['type','!=','consu'],['name','=like','Hamburguesa de queso']]],
                                  {'fields':['id','default_code','name','categ_id','price','list_price','standard_price',
                                             'x_studio_many2one_field_a487A','x_studio_sublinea_1','x_studio_upc','type','currency_id',
                                             'cost_currency_id','uom_name','seller_ids','product_variant_ids','product_variant_id',
-                                            'product_variant_count','__last_update','taxes_id','supplier_taxes_id','property_stock_production',
+                                            'product_variant_count','__last_update','taxes_id','supplier_taxes_id',
                                             'property_stock_inventory','qty_available','virtual_available','incoming_qty','outgoing_qty',
                                             'nbr_moves_in','nbr_moves_out','nbr_reordering_rules','reordering_min_qty','reordering_max_qty',
                                             'bom_line_ids','bom_ids','bom_count','used_in_bom_count','mrp_product_qty','purchased_product_qty',
-                                            'cost_method','valuation','sales_count','x_studio_many2one_field_2qA7w']})
+                                            'sales_count','x_studio_many2one_field_2qA7w']})
     
-    '''
+    
     for orderLine in ordersLines:
         print(orderLine)
         print('\n')
@@ -69,6 +73,7 @@ def main():
     wb.save(r"C:\\Users\\ESCH\Desktop\\odoo-852\\excel\\productTemplate.xlsx")        
     
     print(f"\n********************\nSe acab´lo que se daba")
+    '''
     
 if __name__ == '__main__':
     main()

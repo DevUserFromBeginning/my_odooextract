@@ -16,8 +16,8 @@ Fecha actual: 10/05/2024
 def main():
     url = 'https://importvzla-import-import-prueba-12847814.dev.odoo.com'
     db = 'importvzla-import-import-prueba-12847814'
-    username = 'admin'
-    password = 'Import2023!'
+    username = 'francisco.tellez@import-import.com'
+    password = '1129734'
 
     common = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(url))
     version = common.version()
@@ -28,12 +28,12 @@ def main():
     
     #['company_id', '=', 'Import Import'] # filtro de compañía...aparentemente no funciona
     ordersLines = models.execute_kw(db, uid, password,'stock.quant', 'search_read',
-                                 [[['company_id','=','Import Import'],['location_id','in',['INC/Stock','Impor/Stock','OP/Stock','TR/Stock','Impor/Stock/Stock']],]],
+                                 [[['company_id','=','Import Import'],['location_id','in',['INC/Stock','Impor/Stock','OP/Stock','TR/Stock','Impor/Stock/Stock']],['product_id','=like','Hamburguesa de queso']]],
                                  {'fields':['id','company_id','product_id','product_tmpl_id','display_name','product_uom_id','location_id','owner_id',
                                             'quantity','reserved_quantity','available_quantity','in_date','on_hand','product_categ_id','inventory_quantity',
                                             'inventory_diff_quantity','inventory_date','inventory_quantity_set','is_outdated','user_id','__last_update',
                                             'create_uid','create_date','value','currency_id']})
-    '''
+    
     contador = 1
     for orderLine in ordersLines:
         print(f"{contador}.- ")
@@ -69,7 +69,7 @@ def main():
     wb.save(r"C:\\Users\\ESCH\Desktop\\odoo\\excel\\stockQuant.xlsx")        
     
     print(f"\n********************\nSe acab´lo que se daba")
-    
+    '''
     
 if __name__ == '__main__':
     main()
