@@ -52,6 +52,7 @@ def main():
                                             'cost_currency_id','list_price','uom_id','seller_ids','variant_seller_ids','product_variant_ids',
                                             'product_variant_id','taxes_id','supplier_taxes_id','x_studio_upc']})
     
+    '''
     linea = 0
     for orderLine in ordersLines:
         print(f"item: {linea}: ")
@@ -85,7 +86,7 @@ def main():
     wb.save(r"C:\\Users\\ESCH\Desktop\\odoo-852\\excel\\productProduct.xlsx")        
     
     print(f"\n********************\nSe acab´lo que se daba")
-    '''
+    
     
 if __name__ == '__main__':
     main()

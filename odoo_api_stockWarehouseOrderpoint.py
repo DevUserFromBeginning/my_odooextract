@@ -1,6 +1,5 @@
 import xmlrpc.client
 import openpyxl
-import pprint
 
 
 '''
@@ -17,8 +16,8 @@ Fecha actual: 10/05/2024
 def main():
     url = 'https://importvzla-import-import-prueba-12847814.dev.odoo.com'
     db = 'importvzla-import-import-prueba-12847814'
-    username = 'admin'
-    password = 'Import2023!'
+    username = 'francisco.tellez@import-import.com'
+    password = '1129734'
 
     common = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(url))
     version = common.version()
@@ -29,12 +28,14 @@ def main():
     
     #['company_id', '=', 'Import Import'] # filtro de compañía...aparentemente no funciona
     ordersLines = models.execute_kw(db, uid, password,'stock.warehouse.orderpoint', 'search_read',
-                                 [[['company_id','=','Import Import']]],
+                                 [[]],
                                  {'fields':['name','trigger','active','snoozed_until','warehouse_id','location_id','product_tmpl_id','product_id','product_category_id','product_uom',
                                             'product_uom_name','product_min_qty','product_max_qty','qty_multiple','group_id','company_id','allowed_location_ids','rule_ids',
                                             'lead_days_date','route_id','qty_on_hand','qty_forecast','qty_to_order','id','__last_update','display_name','create_uid','create_date',
-                                            'write_uid','write_date','show_bom','bom_id','show_supplier','supplier_id','vendor_id'],'limit':400})
-    '''for orderLine in ordersLines:
+                                            'write_uid','write_date','show_bom','bom_id','show_supplier','supplier_id','vendor_id']})
+    
+    '''
+    for orderLine in ordersLines:
         print(orderLine)
         print('\n')
     '''
@@ -45,8 +46,9 @@ def main():
         
     
     wb = openpyxl.Workbook()
-    wb.create_sheet("stock.warehouse.orderpoint")
-    ws = wb['stock.warehouse.orderpoint']
+    ws = wb.active
+    ws.title = "stock.warehouse.orderpoint"
+    
     
     tmpRow = 1
     tmpColumn = 1
@@ -63,9 +65,10 @@ def main():
         tmpColumn=1
         tmpRow = tmpRow + 1
     
-    wb.save(r"C:\\Users\\ESCH\Desktop\\odoo_api\\excel\\stockWarehouseOrderpoint.xlsx")        
+    wb.save(r"C:\\Users\\ESCH\Desktop\\odoo-852\\excel\\stockWarehouseOrderpoint.xlsx")        
     
     print(f"\n********************\nSe acab´lo que se daba") 
+    
     
 if __name__ == '__main__':
     main()

@@ -11,6 +11,8 @@ Fecha actual: 10/05/2024
 .- Determinas los campos útiles del modelo para cada caso (852, GPOS, etc)
 .- Llevar los registros a excel
 
+    username = 'admin'
+    password = 'Import2023!'
 '''
 
 def main():
@@ -25,28 +27,29 @@ def main():
     uid = common.authenticate(db, username, password, {})
 
     models = xmlrpc.client.ServerProxy('{}/xmlrpc/2/object'.format(url))
- 
-    ordersLines = models.execute_kw(db, uid, password,'purchase.order', 'search_read',
-                                 [[['state','not in',['cancel','draft']]]],
-                                 {'fields': ['id','name','date_order','date_approve','partner_id','currency_id','state','order_line','invoice_count',
-                                             'invoice_ids','invoice_status','date_planned','amount_untaxed','amount_tax',
-                                             'amount_total','tax_country_id','payment_term_id','product_id','user_id','currency_rate','__last_update',
-                                             'display_name','create_uid','create_date','write_uid','write_date','requisition_id','incoming_picking_count','picking_ids',
-                                             'sale_order_count','purchase_manual_currency_rate_active','x_studio_fecha_1','x_studio_fecha','x_studio_fecha_2',
-                                             'x_studio_total__1','x_OC','x_studio_tasa_compra','x_fechac','x_Factura','x_studio_nota_de_recepcion']})
+    
+    
+    ordersLines = models.execute_kw(db, uid, password,'stock.move.line', 'search_read',
+                                 [[['picking_code','!=','internal']]],
+                                 {'fields':['id','move_id','origin','date','__last_update','display_name','product_id','picking_code','location_id','location_dest_id',
+                                            'picking_type_id','picking_partner_id','product_qty','product_uom_qty','qty_done','product_uom_id','sale_price',
+                                            'picking_id','reference','state','destination_country_code']})
     
     '''
     for orderLine in ordersLines:
         print(orderLine)
         print('\n')
     '''
+    
     campos = []
     for campo in ordersLines[0].keys():
         campos.append(campo)
         
+    
     wb = openpyxl.Workbook()
     ws = wb.active
-    ws.title = 'purchase.order'
+    ws.title = "stock.move.line"
+    
     
     tmpRow = 1
     tmpColumn = 1
@@ -63,10 +66,11 @@ def main():
         tmpColumn=1
         tmpRow = tmpRow + 1
     
-    wb.save(r"C:\\Users\\ESCH\Desktop\\odoo-852\\excel\\purchaseOrder.xlsx")        
+    wb.save(r"C:\\Users\\ESCH\Desktop\\odoo-852\\excel\\stockMoveLine.xlsx")        
     
-    print(f"\n********************\nSe acab´lo que se daba")
+    print(f"\n********************\nSe acab´lo que se daba") 
     
     
 if __name__ == '__main__':
     main()
+    

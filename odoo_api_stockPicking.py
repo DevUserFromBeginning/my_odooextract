@@ -1,6 +1,5 @@
 import xmlrpc.client
 import openpyxl
-import pprint
 
 
 '''
@@ -8,17 +7,19 @@ Realizado por: Ernesto Caraballo
 Fecha actual: 10/05/2024
 
 .- Conectarme a la api (OK)
-.- Extraer los registros del modelo: crm.leads
+.- Extraer los registros del modelo: stock.picking
 .- Determinas los campos útiles del modelo para cada caso (852, GPOS, etc)
 .- Llevar los registros a excel
-
+    
+    username = 'admin'
+    password = 'Import2023!'
 '''
 
 def main():
     url = 'https://importvzla-import-import-prueba-12847814.dev.odoo.com'
     db = 'importvzla-import-import-prueba-12847814'
-    username = 'admin'
-    password = 'Import2023!'
+    username = 'francisco.tellez@import-import.com'
+    password = '1129734'
 
     common = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(url))
     version = common.version()
@@ -27,9 +28,10 @@ def main():
 
     models = xmlrpc.client.ServerProxy('{}/xmlrpc/2/object'.format(url))
     
-    #['company_id', '=', 'Import Import'] # filtro de compañía...aparentemente no funciona
+    
+    #['company_id','=','Import Import'],['state','in',['waiting','confirmed','assigned']],['location_dest_id','=','Partner Locations/Customers']
     ordersLines = models.execute_kw(db, uid, password,'stock.picking', 'search_read',
-                                 [[['company_id','=','Import Import'],['state','in',['waiting','confirmed','assigned']],['location_dest_id','=','Partner Locations/Customers']]],
+                                 [[['product_id','ilike','Hamburguesa de queso RefInt']]],
                                  {'fields':['id','name','origin','note','backorder_id','backorder_ids','state','group_id','scheduled_date','date_deadline',
                                             'date','date_done','location_id','location_dest_id','move_lines','move_ids_without_package','picking_type_id',
                                             'picking_type_code','use_existing_lots','partner_id','company_id','move_line_ids','move_line_ids_without_package',
@@ -37,28 +39,24 @@ def main():
                                             'show_operations','show_reserved','show_lots_text','__last_update','display_name','create_uid','create_date',
                                             'write_uid','write_date','country_code','purchase_id','sale_id','carrier_price','destination_country_code',
                                             'x_numero','x_studio_numero_de_factura']})
+    
     '''
+    contador = 0
     for orderLine in ordersLines:
+        print(f'item {contador}: ')
         print(orderLine)
         print('\n')
+        contador +=1
     '''
     
     campos = []
     for campo in ordersLines[0].keys():
         campos.append(campo)
+
         
-    ###print(campos)
-    '''
-    temp = 1
-    for tmpOrder in ordersLines:
-        print(f'\n\n{temp}')
-        print(tmpOrder)
-        temp += 1
-        
-    '''
     wb = openpyxl.Workbook()
-    wb.create_sheet("stock.picking")
-    ws = wb['stock.picking']
+    ws = wb.active
+    ws.title='stock.picking'
     
     tmpRow = 1
     tmpColumn = 1
@@ -75,7 +73,7 @@ def main():
         tmpColumn=1
         tmpRow = tmpRow + 1
     
-    wb.save(r"C:\\Users\\ESCH\Desktop\\odoo_api\\excel\\stockPicking.xlsx")        
+    wb.save(r"C:\\Users\\ESCH\Desktop\\odoo-852\\excel\\stockPicking.xlsx")        
     
     print(f"\n********************\nSe acab´lo que se daba")
     

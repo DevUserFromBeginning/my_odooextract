@@ -10,7 +10,9 @@ Fecha actual: 10/05/2024
 .- Extraer los registros del modelo: crm.leads
 .- Determinas los campos útiles del modelo para cada caso (852, GPOS, etc)
 .- Llevar los registros a excel
-
+    
+    username = 'admin'
+    password = 'Import2023!'
 '''
 
 def main():
@@ -25,28 +27,29 @@ def main():
     uid = common.authenticate(db, username, password, {})
 
     models = xmlrpc.client.ServerProxy('{}/xmlrpc/2/object'.format(url))
- 
-    ordersLines = models.execute_kw(db, uid, password,'purchase.order', 'search_read',
-                                 [[['state','not in',['cancel','draft']]]],
-                                 {'fields': ['id','name','date_order','date_approve','partner_id','currency_id','state','order_line','invoice_count',
-                                             'invoice_ids','invoice_status','date_planned','amount_untaxed','amount_tax',
-                                             'amount_total','tax_country_id','payment_term_id','product_id','user_id','currency_rate','__last_update',
-                                             'display_name','create_uid','create_date','write_uid','write_date','requisition_id','incoming_picking_count','picking_ids',
-                                             'sale_order_count','purchase_manual_currency_rate_active','x_studio_fecha_1','x_studio_fecha','x_studio_fecha_2',
-                                             'x_studio_total__1','x_OC','x_studio_tasa_compra','x_fechac','x_Factura','x_studio_nota_de_recepcion']})
+    
+    #['company_id','=','Import Import'],['state','in',['waiting','confirmed','assigned']],['location_dest_id','=','Partner Locations/Customers']
+    ordersLines = models.execute_kw(db, uid, password,'stock.valuation.layer', 'search_read',
+                                 [[['product_id','ilike','Hamburguesa de queso RefInt']]],
+                                 {'fields':['id','product_id','quantity','uom_id','currency_id','unit_cost','value','remaining_value','description',
+                                            'stock_move_id','__last_update','display_name','x_studio_documento_de_origen']})
     
     '''
+    contador = 0
     for orderLine in ordersLines:
+        print(f'item {contador}: ')
         print(orderLine)
         print('\n')
+        contador +=1
     '''
+    
     campos = []
     for campo in ordersLines[0].keys():
-        campos.append(campo)
-        
+        campos.append(campo) 
+    
     wb = openpyxl.Workbook()
     ws = wb.active
-    ws.title = 'purchase.order'
+    ws.title='stock.valuation.layer'
     
     tmpRow = 1
     tmpColumn = 1
@@ -63,7 +66,7 @@ def main():
         tmpColumn=1
         tmpRow = tmpRow + 1
     
-    wb.save(r"C:\\Users\\ESCH\Desktop\\odoo-852\\excel\\purchaseOrder.xlsx")        
+    wb.save(r"C:\\Users\\ESCH\Desktop\\odoo-852\\excel\\stockValuationLayer.xlsx")        
     
     print(f"\n********************\nSe acab´lo que se daba")
     

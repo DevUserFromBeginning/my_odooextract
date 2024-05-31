@@ -16,8 +16,8 @@ Fecha actual: 10/05/2024
 def main():
     url = 'https://importvzla-import-import-prueba-12847814.dev.odoo.com'
     db = 'importvzla-import-import-prueba-12847814'
-    username = 'admin'
-    password = 'Import2023!'
+    username = 'francisco.tellez@import-import.com'
+    password = '1129734'
 
     common = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(url))
     version = common.version()
@@ -26,10 +26,10 @@ def main():
 
     models = xmlrpc.client.ServerProxy('{}/xmlrpc/2/object'.format(url))
     
-    #['company_id', '=', 'Import Import'] # filtro de compañía...aparentemente no funciona
+    
     ordersLines = models.execute_kw(db, uid, password,'sale.order.line', 'search_read',
-                                 [[]],
-                                 {'fields':['id','company_id','order_id','name','invoice_lines','invoice_status','product_id','product_template_id','price_unit',
+                                 [[['name','=like','%Hamburguesa de queso%']]],
+                                 {'fields':['id','order_id','name','invoice_lines','invoice_status','product_id','product_template_id','price_unit',
                                             'price_subtotal','price_tax','price_total','price_reduce','tax_id','price_reduce_taxinc','price_reduce_taxexcl',
                                             'discount','product_uom_qty','product_uom','qty_delivered','qty_delivered_manual','qty_to_invoice','qty_invoiced',
                                             'untaxed_amount_invoiced','untaxed_amount_to_invoice','salesman_id','currency_id','order_partner_id','is_expense',
@@ -68,7 +68,7 @@ def main():
         tmpColumn=1
         tmpRow = tmpRow + 1
     
-    wb.save(r"C:\\Users\\ESCH\Desktop\\odoo\\excel\\saleOrderLine.xlsx")        
+    wb.save(r"C:\\Users\\ESCH\Desktop\\odoo-852\\excel\\saleOrderLine.xlsx")        
     
     print(f"\n********************\nSe acab´lo que se daba")
     

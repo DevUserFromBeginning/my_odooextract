@@ -30,7 +30,7 @@ def main():
 
     models = xmlrpc.client.ServerProxy('{}/xmlrpc/2/object'.format(url))
     
-    #['company_id', '=', 'Import Import'] # filtro de compañía...aparentemente no funciona
+    
     ordersLines = models.execute_kw(db, uid, password,'product.template', 'search_read',
                                  [[['categ_id','in',['Principal','Servicios y Software']],['type','!=','consu'],['name','=like','Hamburguesa de queso']]],
                                  {'fields':['id','default_code','name','categ_id','price','list_price','standard_price',
@@ -42,7 +42,7 @@ def main():
                                             'bom_line_ids','bom_ids','bom_count','used_in_bom_count','mrp_product_qty','purchased_product_qty',
                                             'sales_count','x_studio_many2one_field_2qA7w']})
     
-    
+    '''
     for orderLine in ordersLines:
         print(orderLine)
         print('\n')
@@ -73,7 +73,7 @@ def main():
     wb.save(r"C:\\Users\\ESCH\Desktop\\odoo-852\\excel\\productTemplate.xlsx")        
     
     print(f"\n********************\nSe acab´lo que se daba")
-    '''
+    
     
 if __name__ == '__main__':
     main()

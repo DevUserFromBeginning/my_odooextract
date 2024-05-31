@@ -34,7 +34,7 @@ def main():
     models = xmlrpc.client.ServerProxy('{}/xmlrpc/2/object'.format(url))
 
     available_models = ['crm.lead', 'res.partner', 'res.users', 'sale.order', 'sale.order.line', 'product.template', 'product.product', 
-                        'purchase.order', 'purchase.order.line', 'x_linea', 'x_subninea', 'x_fabricante',
+                        'purchase.order', 'purchase.order.line', 'x_linea', 'x_subninea', 'x_fabricante','stock.move','stock.move.line',
                         'stock.picking.type','stock.picking','stock.warehouse.orderpoint','stock.quant']
     # stock.picking transferencias de inventario
     # stock.warehouse.orderpoint reposiciones de inventario

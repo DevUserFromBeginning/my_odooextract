@@ -16,8 +16,8 @@ Fecha actual: 16/05/2024
 def main():
     url = 'https://importvzla-import-import-prueba-12847814.dev.odoo.com'
     db = 'importvzla-import-import-prueba-12847814'
-    username = 'admin'
-    password = 'Import2023!'
+    username = 'francisco.tellez@import-import.com'
+    password = '1129734'
 
     common = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(url))
     version = common.version()
@@ -27,10 +27,11 @@ def main():
     models = xmlrpc.client.ServerProxy('{}/xmlrpc/2/object'.format(url))
  
     ordersLines = models.execute_kw(db, uid, password,'purchase.order.line', 'search_read',
-                                 [[['company_id', '=', 'Import Import']]],
-                                 {'fields': ['id','company_id','order_id','date_order','partner_id','product_type','product_id','name','product_qty','product_uom_qty','date_planned',
-                                             'product_uom','product_uom_category_id','price_unit','price_subtotal','price_total','price_tax','state','invoice_lines','qty_invoiced',
-                                             'qty_received','qty_received_manual','qty_to_invoice','currency_id','display_name','create_uid','create_date','__last_update']})
+                                 [[['product_type','!=','false'],['state','not in',['cancel','draft']],['name','=like','%Hamburguesa de queso%']]],
+                                 {'fields': ['id','order_id','date_order','partner_id','product_type','product_id','name','product_qty',
+                                             'product_uom','price_unit','price_subtotal','price_total','price_tax','invoice_lines',
+                                             'qty_received','qty_received_manual','currency_id','display_name','create_uid','create_date','__last_update']})
+    
     '''
     for orderLine in ordersLines:
         print(orderLine)
@@ -59,11 +60,9 @@ def main():
         tmpColumn=1
         tmpRow = tmpRow + 1
     
-    wb.save(r"C:\\Users\\ESCH\Desktop\\odoo\\excel\\purchaseOrderLine.xlsx")        
+    wb.save(r"C:\\Users\\ESCH\Desktop\\odoo-852\\excel\\purchaseOrderLine.xlsx")        
     
     print(f"\n********************\nSe acab´lo que se daba")
     
 if __name__ == '__main__':
     main()
-    
-

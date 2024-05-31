@@ -26,14 +26,15 @@ def main():
 
     models = xmlrpc.client.ServerProxy('{}/xmlrpc/2/object'.format(url))
     
-    #['company_id', '=', 'Import Import'] # filtro de compañía...aparentemente no funciona
+    
     ordersLines = models.execute_kw(db, uid, password,'stock.quant', 'search_read',
-                                 [[['company_id','=','Import Import'],['location_id','in',['INC/Stock','Impor/Stock','OP/Stock','TR/Stock','Impor/Stock/Stock']],['product_id','=like','Hamburguesa de queso']]],
+                                 [[['location_id','in',['INC/Stock','Impor/Stock','OP/Stock','TR/Stock','Impor/Stock/Stock']],['product_id','=like','Hamburguesa de queso']]],
                                  {'fields':['id','company_id','product_id','product_tmpl_id','display_name','product_uom_id','location_id','owner_id',
                                             'quantity','reserved_quantity','available_quantity','in_date','on_hand','product_categ_id','inventory_quantity',
                                             'inventory_diff_quantity','inventory_date','inventory_quantity_set','is_outdated','user_id','__last_update',
                                             'create_uid','create_date','value','currency_id']})
     
+    '''
     contador = 1
     for orderLine in ordersLines:
         print(f"{contador}.- ")
@@ -66,10 +67,10 @@ def main():
         tmpColumn=1
         tmpRow = tmpRow + 1
     
-    wb.save(r"C:\\Users\\ESCH\Desktop\\odoo\\excel\\stockQuant.xlsx")        
+    wb.save(r"C:\\Users\\ESCH\Desktop\\odoo-852\\excel\\stockQuant.xlsx")        
     
     print(f"\n********************\nSe acab´lo que se daba")
-    '''
+    
     
 if __name__ == '__main__':
     main()
