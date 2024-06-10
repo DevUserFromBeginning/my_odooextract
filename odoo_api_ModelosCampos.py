@@ -35,10 +35,7 @@ def main():
 
     available_models = ['crm.lead', 'res.partner', 'res.users', 'sale.order', 'sale.order.line', 'product.template', 'product.product', 
                         'purchase.order', 'purchase.order.line', 'x_linea', 'x_subninea', 'x_fabricante','stock.move','stock.move.line',
-                        'stock.picking.type','stock.picking','stock.warehouse.orderpoint','stock.quant']
-    # stock.picking transferencias de inventario
-    # stock.warehouse.orderpoint reposiciones de inventario
-    # stock.quant ajustes de inventario
+                        'stock.picking.type','stock.picking','stock.warehouse.orderpoint','stock.quant','account.move','account.move.line']
     
  
     wb = openpyxl.Workbook()

@@ -28,17 +28,24 @@ def main():
 
     models = xmlrpc.client.ServerProxy('{}/xmlrpc/2/object'.format(url))
     
-    
+    ####
+    # en esta consulta, por fin logré, utilizar "o" en la condicion
+    ####
+    # me falta condicionar la fecha de la data; no logro que funcione el filtro por fecha
     ordersLines = models.execute_kw(db, uid, password,'stock.move.line', 'search_read',
-                                 [[['picking_code','!=','internal']]],
-                                 {'fields':['id','move_id','origin','date','__last_update','display_name','product_id','picking_code','location_id','location_dest_id',
-                                            'picking_type_id','picking_partner_id','product_qty','product_uom_qty','qty_done','product_uom_id','sale_price',
-                                            'picking_id','reference','state','destination_country_code']})
-    
+                                 [[['picking_code','not in',['internal',False]],['qty_done','!=',0],['state','!=','cancel'],
+                                   '|',('picking_type_id','like','Principal: Expediciones'),('picking_type_id','like', 'Operador Logistico: Recepciones')]],
+                                 {'fields':['id','move_id','origin','__last_update','display_name','product_id','location_id','location_dest_id',
+                                            'picking_type_id','picking_partner_id','qty_done','product_uom_id','sale_price',
+                                            'picking_id','state']})
+                            
     '''
+    contador = 1
     for orderLine in ordersLines:
+        print(f'item: {contador}')
         print(orderLine)
         print('\n')
+        contador +=1
     '''
     
     campos = []
@@ -69,7 +76,7 @@ def main():
     wb.save(r"C:\\Users\\ESCH\Desktop\\odoo-852\\excel\\stockMoveLine.xlsx")        
     
     print(f"\n********************\nSe acab´lo que se daba") 
-    
+    '''
     
 if __name__ == '__main__':
     main()

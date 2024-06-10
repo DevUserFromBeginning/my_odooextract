@@ -1,0 +1,12 @@
+# Instancia de Pruebas
+    url = 'https://importvzla-import-import-prueba-12847814.dev.odoo.com'
+    db = 'importvzla-import-import-prueba-12847814'
+    username = 'francisco.tellez@import-import.com'
+    password = '1129734'
+
+
+# Instancia Operativa
+    url = 'https://importvzla-import-import.odoo.com'
+    db = 'importvzla-import-import-import-5808788'
+    username = 'francisco.tellez@import-import.com'
+    password = '1129734'
