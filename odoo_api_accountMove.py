@@ -1,7 +1,3 @@
-import xmlrpc.client
-import openpyxl
-
-
 '''
 Realizado por: Ernesto Caraballo
 Fecha actual: 05/06/2024
@@ -12,8 +8,17 @@ Fecha actual: 05/06/2024
 .- Llevar los registros a excel
 
 '''
+import xmlrpc.client
+import openpyxl
 
-def main():
+
+def load_from_API():
+    '''
+    Función para consultar y traer todos los artículos del modelo product.template
+    
+    :param: no recibe parámetros
+    :return: devuelve una lista cuyos elementos son diccionarios con todos los registros devueltos por la API
+    '''
     url = 'https://importvzla-import-import-prueba-12847814.dev.odoo.com'
     db = 'importvzla-import-import-prueba-12847814'
     username = 'francisco.tellez@import-import.com'
@@ -41,7 +46,11 @@ def main():
                                                'display_name','create_date','attachment_ids','partner_shipping_id','manual_currency_rate',
                                                'fiscal_provider','x_tasa','x_payment_ids','sale_order_id','sale_order_number','rate',
                                                'amount_untaxed_rate','amount_tax_rate','amount_total_rate','x_studio_total_','x_studio_deuda',
-                                               'x_tipodoc','x_ncontrol','x_studio_related_field_35Zlc', 'x_studio_orden_de_compra']}) 
+                                               'x_tipodoc','x_ncontrol','x_studio_related_field_35Zlc', 'x_studio_orden_de_compra']})
+    return ordersLines
+    
+def main():
+     
     
     '''
     contador = 1
@@ -51,8 +60,9 @@ def main():
         contador +=1
     '''  
     
+    lines = load_from_API()
     campos = []
-    for campo in ordersLines[0].keys():
+    for campo in lines[0].keys():
         campos.append(campo)
         
     
@@ -68,7 +78,7 @@ def main():
     tmpRow = tmpRow + 1 #to make content start filling at row 2
     tmpColumn = 1
     
-    for order in ordersLines:
+    for order in lines:
         for campo in campos:
             ws.cell(row=tmpRow, column=tmpColumn).value= str(order[campo])
             tmpColumn = tmpColumn + 1

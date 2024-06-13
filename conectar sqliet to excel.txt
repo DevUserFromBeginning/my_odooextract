@@ -1,0 +1,15 @@
+ How To Link SQLITE to Excel? Anyone have instructions on how to access data from a SQLITE .db file stored locally into Excel?
+
+To link an SQLite database to Excel, you can use the following steps:
+
+    Install the SQLite ODBC driver: To connect to an SQLite database from Excel, you will need to install the SQLite ODBC driver. You can download the driver from the following link: https://sqliteodbc.org/
+
+    Create a System DSN: Once the driver is installed, you need to create a System DSN (Data Source Name) to connect to the SQLite database. To do this, go to the Control Panel and search for "ODBC". Click on the "ODBC Data Sources (64-bit)" option, and then click on the "Add" button. Select the "SQLite3 ODBC Driver" from the list of available drivers and click on "Finish".
+
+    Configure the DSN: In the next window, you will need to enter the details of the DSN. Give the DSN a name and then specify the location of the SQLite database file. You can also specify a user name and password if your database requires one.
+
+    Connect to the database from Excel: Once the DSN is created, you can use it to connect to the SQLite database from Excel. In Excel, go to the "Data" tab and click on the "From Other Sources" button. Select the "From Data Connection Wizard" option and then choose the "ODBC DSN" option. Select the DSN that you created earlier and click on "Next".
+
+    Import the data: In the next window, you can select the tables or queries that you want to import into Excel. Select the desired options and click on "Finish" to import the data.
+
+You can then use the imported data in Excel as you would any other data in a spreadsheet. 

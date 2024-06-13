@@ -14,10 +14,10 @@ Fecha actual: 10/05/2024
 '''
 
 def main():
-    url = 'https://importvzla-import-import-prueba-12847814.dev.odoo.com'
-    db = 'importvzla-import-import-prueba-12847814'
-    username = 'admin'
-    password = 'Import2023!'
+    url = 'https://importvzla-import-import.odoo.com'
+    db = 'importvzla-import-import-import-5808788'
+    username = 'francisco.tellez@import-import.com'
+    password = '1129734'
 
     common = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(url))
     version = common.version()
@@ -30,13 +30,12 @@ def main():
     # pendiente de este tema 
     ordersLines = models.execute_kw(db, uid, password,'res.partner', 'search_read',
                                  [[]],
-                                 {'fields':['id','company_id','name','display_name','user_id','comment','category_id','credit_limit','active','employee','type','street','street2','zip','city',
-                                            'state_id','country_id','country_code','email','email_formatted','phone','mobile','is_company','industry_id','company_type',
-                                            'user_ids','contact_address','commercial_partner_id','commercial_company_name','company_name','self','__last_update',
-                                            'create_uid','create_date','channel_ids','contact_address_complete','property_product_pricelist','team_id',
-                                            'phone_sanitized','phone_mobile_search','credit','debit','debit_limit','total_invoiced','currency_id','purchase_line_ids',
-                                            'sale_order_count','sale_order_ids','unpaid_invoices','total_due','total_overdue','taxpayer','type_invoice_usd','type_invoice_ves',
-                                            'x_studio_canal_comercial','x_tipopersona','x_studio_proveedor','x_studio_bpid','x_studio_tipo_de_proveedor','x_studio_zonas_de_ventas',
+                                 {'fields':['id','company_id','name','active','type','street','street2','zip','city',
+                                            'state_id','country_id','country_code','is_company','industry_id','company_type',
+                                            'contact_address','commercial_partner_id','commercial_company_name','self','__last_update',
+                                            'contact_address_complete','credit','debit','debit_limit','total_invoiced','currency_id',
+                                            'sale_order_count','unpaid_invoices','total_due','total_overdue',
+                                            'x_studio_canal_comercial','x_tipopersona','x_studio_bpid','x_studio_tipo_de_proveedor','x_studio_zonas_de_ventas',
                                             'x_studio_tipo_de_cliente','x_studio_cliente']})
     '''
     for orderLine in ordersLines:
@@ -66,7 +65,7 @@ def main():
         tmpColumn=1
         tmpRow = tmpRow + 1
     
-    wb.save(r"C:\\Users\\ESCH\Desktop\\odoo\\excel\\resPartner.xlsx")        
+    wb.save(r"C:\\Users\\ESCH\Desktop\\odoo-852\\excel\\resPartner.xlsx")        
     
     print(f"\n********************\nSe acab´lo que se daba")
     
