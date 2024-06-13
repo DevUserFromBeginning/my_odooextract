@@ -120,7 +120,6 @@ CREATE TABLE accountMove(
 	"amount_total" REAL,  
 	"amount_residual" REAL, 
 	"payment_state" TEXT(20),
-	"reversal_move_id" TEXT(20),
 	"invoice_date" TEXT(10),
 	"invoice_date_due" TEXT(10),
 	"invoice_origin" TEXT(10),
@@ -134,7 +133,6 @@ CREATE TABLE accountMove(
 	"manual_currency_rate" REAL,
 	"fiscal_provider" TEXT(150),
 	"x_tasa" REAL,
-	"x_payment_ids" TEXT(30), 
 	"sale_order_id" TEXT(30),
 	"sale_order_number" TEXT(30),
 	"rate" REAL,
@@ -150,10 +148,47 @@ CREATE TABLE accountMove(
 	PRIMARY KEY("id")
 );
 
+CREATE TABLE accountMoveLine(
+	"id" INTEGER,
+	"date" TEXT(10),
+	"create_date" TEXT(19),
+	"write_date" TEXT(19),
+	"__last_update" TEXT(19),
+	"move_id" TEXT(100),
+	"move_name" TEXT(50) ,
+	"ref" TEXT(150),
+	"journal_id" TEXT(50),
+	"account_id" TEXT(50),
+	"account_internal_type" TEXT(20), 
+	"account_internal_group" TEXT(20),
+	"name" TEXT(150),
+	"quantity" REAL,
+	"price_unit" REAL,
+	"debit" REAL,
+	"credit" REAL,
+	"balance" REAL,
+	"amount_currency" REAL,
+	"price_subtotal" REAL,
+	"price_total" REAL,
+	"date_maturity" TEXT(10),
+	"currency_id" TEXT(4),
+	"partner_id" TEXT(100),
+	"product_id" TEXT(250),
+	"payment_id" TEXT(30),
+	"tax_line_id" TEXT(100),
+	"tax_base_amount" REAL,
+	"amount_residual" REAL,
+	"amount_residual_currency" REAL,
+	"matching_number" TEXT(20),
+	"fabricante" TEXT(20),
+	PRIMARY KEY("id")
+);
+
 
 DROP TABLE productTemplate;
 DROP TABLE productProduct;
 DROP TABLE resPartner;
 DROP TABLE accountMove;
+DROP TABLE accountMoveLine;
 
 
