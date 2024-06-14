@@ -30,13 +30,11 @@ def main():
     # pendiente de este tema 
     ordersLines = models.execute_kw(db, uid, password,'res.partner', 'search_read',
                                  [[]],
-                                 {'fields':['id','company_id','name','active','type','street','street2','zip','city',
-                                            'state_id','country_id','country_code','is_company','industry_id','company_type',
-                                            'contact_address','commercial_partner_id','commercial_company_name','self','__last_update',
-                                            'contact_address_complete','credit','debit','debit_limit','total_invoiced','currency_id',
-                                            'sale_order_count','unpaid_invoices','total_due','total_overdue',
-                                            'x_studio_canal_comercial','x_tipopersona','x_studio_bpid','x_studio_tipo_de_proveedor','x_studio_zonas_de_ventas',
-                                            'x_studio_tipo_de_cliente','x_studio_cliente']})
+                                 {'fields':['id','name','active','type','street','street2','zip','city','state_id','country_id',
+                                            'country_code','company_type','contact_address','commercial_company_name','__last_update',
+                                            'contact_address_complete','credit','debit','total_invoiced','currency_id','sale_order_count',
+                                            'total_due','total_overdue','x_studio_canal_comercial','x_tipopersona','x_studio_bpid',
+                                            'x_studio_tipo_de_proveedor','x_studio_zonas_de_ventas','x_studio_tipo_de_cliente','x_studio_cliente']})
     '''
     for orderLine in ordersLines:
         print(orderLine)

@@ -42,7 +42,7 @@ def main():
             block = remaining_records
         else:
             ordersLines = models.execute_kw(db, uid, password,'account.move.line', 'search_read',
-                                    [[('parent_state','not in',['cancel','draft']),]],
+                                    [[]],
                                     {'fields':['id','date','create_date','write_date','__last_update','move_id','move_name','ref','journal_id','account_id','account_internal_type',
                                                'account_internal_group','name','quantity','price_unit','debit','credit','balance','amount_currency','price_subtotal','price_total',
                                                'date_maturity','currency_id','partner_id','product_id','payment_id','tax_ids','tax_line_id','tax_base_amount','amount_residual',

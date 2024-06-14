@@ -22,10 +22,13 @@ def is_list(field):
     :return: el segundo elemento de la lista o el primer elemento en caso que la lista sea de longitud 1
     '''
     if isinstance(field, list):
-        if len(field) > 1:
+        '''if len(field) > 1:
             return field[1]
-        else:
+        elif len(field) == 1:
             return field[0]
+        else:
+            return 0'''
+        return str(field)
     else:
         return field
 
@@ -57,7 +60,7 @@ def load_from_API(salto: int = 0, bloque: int = 1):
     total_records = models.execute_kw(db, uid, password, 'account.move.line', 'search_count', [[]])
     
     ordersLines = models.execute_kw(db, uid, password,'account.move.line', 'search_read',
-                                    [[('parent_state','not in',['cancel','draft']),]],
+                                    [[]],
                                     {'fields':['id','date','create_date','write_date','__last_update','move_id','move_name','ref','journal_id','account_id','account_internal_type',
                                                'account_internal_group','name','quantity','price_unit','debit','credit','balance','amount_currency','price_subtotal','price_total',
                                                'date_maturity','currency_id','partner_id','product_id','payment_id','tax_line_id','tax_base_amount','amount_residual',
@@ -89,7 +92,7 @@ def main():
 
     remaining_records = total_records
     start = 1 #start no cambia es un ciclo
-    block = 10000 #block cambia sólo con el último grupo de registros
+    block = 2500 #block cambia sólo con el último grupo de registros
 
     rcontador = 0
     while True:
@@ -113,7 +116,7 @@ def main():
             data.clear()
             remaining_records = remaining_records - block
             rcontador = rcontador + block
-            print(f'start: {start} remaining_records: {remaining_records} rcontador: {rcontador} block: {block}\n')
+            print(f'start: {start+rcontador}...remaining_records: {remaining_records}\n')
             
 
     

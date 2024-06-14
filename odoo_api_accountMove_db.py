@@ -21,10 +21,13 @@ def is_list(field):
     :return: el segundo elemento de la lista o el primer elemento en caso que la lista sea de longitud 1
     '''
     if isinstance(field, list):
-        if len(field) > 1:
+        '''if len(field) > 1:
             return field[1]
-        else:
+        elif len(field) == 1:
             return field[0]
+        else:
+            return 0'''
+        return str(field)
     else:
         return field
 
@@ -35,7 +38,7 @@ def write_to_db(mdata) -> str:
     
     cur  = con.cursor()
     
-    sql = f'INSERT INTO accountMove VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+    sql = f'INSERT INTO accountMove VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
     cur.executemany(sql,mdata)
     con.commit()
     return f'he terminado...'
@@ -63,9 +66,8 @@ def load_from_API():
 
        
     ordersLines = models.execute_kw(db, uid, password,'account.move', 'search_read',
-                                    [[('state','not in',['cancel','draft']),
-                                      ('invoice_partner_display_name','!=','Anulado'), ('payment_state','!=','reversed')]],
-                                    {'fields':['id','sequence_number','name','highest_name','date','ref','journal_id','line_ids','partner_id',
+                                    [[]],
+                                    {'fields':['id','sequence_number','name','highest_name','date','ref','journal_id','line_ids','partner_id','move_type',
                                                'country_code','payment_reference','amount_untaxed','amount_tax','amount_total', 'amount_residual',
                                                'payment_state','invoice_date','invoice_date_due','invoice_origin',
                                                'invoice_payment_term_id','invoice_line_ids','invoice_partner_display_name','__last_update',
