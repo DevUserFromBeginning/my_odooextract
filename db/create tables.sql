@@ -65,7 +65,6 @@ CREATE TABLE "productProduct"(
 
 CREATE TABLE resPartner(
 	"id" INTEGER,
-	"company_id" TEXT(30),
 	"name" TEXT(250),
 	"active" TEXT(10),
 	"type" TEXT(50),
@@ -76,18 +75,13 @@ CREATE TABLE resPartner(
 	"state_id" TEXT(10),
 	"country_id" TEXT(10),
 	"country_code" TEXT(10),
-	"is_company" TEXT(10),
-	"industry_id" TEXT(10),
 	"company_type" TEXT(25),
 	"contact_address" TEXT(250),
-	"commercial_partner_id" TEXT(15),
 	"commercial_company_name" TEXT(150),
-	"self" TEXT(50),
 	"__last_update" TEXT(19),
 	"contact_address_complete" TEXT(250),
 	"credit" REAL,
 	"debit" REAL,
-	"debit_limit" REAL,
 	"total_invoiced" REAL,
 	"currency_id" TEXT(10),
 	"sale_order_count" INTEGER,
@@ -113,6 +107,7 @@ CREATE TABLE accountMove(
 	"journal_id" TEXT(50),
 	"line_ids" TEXT(30),
 	"partner_id" TEXT(100),
+	"move_type" TEXT(20),
 	"country_code" TEXT(4),
 	"payment_reference" TEXT(30),
 	"amount_untaxed" REAL,
@@ -184,11 +179,35 @@ CREATE TABLE accountMoveLine(
 	PRIMARY KEY("id")
 );
 
+CREATE VIEW IF NOT EXISTS facturaVentas AS
+SELECT
+	id, invoice_date AS Fecha, ref AS Factura, invoice_partner_display_name AS Cliente, amount_untaxed AS Base, amount_tax AS Impuesto, amount_total AS Total,
+	CASE 
+		WHEN amount_residual < 0 THEN 0 
+		ELSE amount_residual 
+	END as Pendiente, 
+	CASE 	
+		WHEN payment_state = "in_payment" THEN "SinConciliar"  
+		WHEN payment_state = "not_paid" THEN "Pendiente"  
+		WHEN payment_state = "partial" THEN "Parcial" 
+		WHEN payment_state = "paid" THEN "Pagada"
+		ELSE payment_state
+	END AS Estado, 
+	invoice_origin
+	
+FROM 
+	accountMove
+WHERE
+	move_type = 'out_invoice'
+	AND payment_state <> 'reversed'
 
+SELECT * from facturaVentas	
+	
 DROP TABLE productTemplate;
 DROP TABLE productProduct;
 DROP TABLE resPartner;
 DROP TABLE accountMove;
 DROP TABLE accountMoveLine;
+DROP VIEW facturaVentas;
 
 
